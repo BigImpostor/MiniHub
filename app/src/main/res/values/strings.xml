@@ -3,5 +3,5 @@
     <string name="login_activity">登录页面</string>
     <string name="edit_id">账号</string>
     <string name="edit_psswrd">密码</string>
-    <string name="login_btn">登录</string>
+    <string name="login_btn">登 录</string>
 </resources>
