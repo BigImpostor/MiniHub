@@ -1,5 +1,8 @@
 package com.example.minihub;
 
-public class AppRetrofit {
+public enum AppRetrofit {
+
+    INSTANCE;
+
 
 }
