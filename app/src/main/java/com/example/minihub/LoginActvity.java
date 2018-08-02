@@ -1,8 +1,10 @@
 package com.example.minihub;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,14 +48,30 @@ public class LoginActvity extends AppCompatActivity implements LoginContract.Log
     }
 
     private void initAction(){
-        user = idEdit.getText().toString();
-        psswrd = psswrdEdit.getText().toString();
         commitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                user = idEdit.getText().toString();
+                psswrd = psswrdEdit.getText().toString();
                 mPresenter.login(user,psswrd);
+                Log.e(LoginActvity.class.getName(),user);
             }
         });
 
+    }
+
+    /**
+     * LoginContract.View
+     * @return
+     */
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void startNextActivity(Intent intent) {
+        startActivity(intent);
     }
 }
