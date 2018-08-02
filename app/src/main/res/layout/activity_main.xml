@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-    <TextView
-        android:id="@+id/helloworld"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigation"></FrameLayout>
 
+    <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:bnv_colored_background="true"
+        app:bnv_with_text="false"
+        app:bnv_shadow="true"
+        app:bnv_tablet="false"
+
+        app:bnv_active_color="@color/material_teal_accent_700"
+        app:bnv_active_text_size="@dimen/bottom_navigation_text_size_active"
+        app:bnv_inactive_text_size="@dimen/bottom_navigation_text_size_inactive"
+        ></com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView>
+
+</RelativeLayout>
 </android.support.constraint.ConstraintLayout>

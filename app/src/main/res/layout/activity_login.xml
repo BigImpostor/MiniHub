@@ -52,7 +52,7 @@
         <Button
             android:id="@+id/login_btn"
             android:textColor="@color/white"
-            android:background="@color/material_green_accent_700"
+            android:background="@color/material_teal_accent_700"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp"
