@@ -6,30 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNavigation"></FrameLayout>
+        android:orientation="vertical">
 
-    <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        app:bnv_colored_background="true"
-        app:bnv_with_text="false"
-        app:bnv_shadow="true"
-        app:bnv_tablet="false"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="@color/material_teal_accent_700"
+            app:titleTextColor="@color/white"
+            />
 
-        app:bnv_active_color="@color/material_teal_accent_700"
-        app:bnv_active_text_size="@dimen/bottom_navigation_text_size_active"
-        app:bnv_inactive_text_size="@dimen/bottom_navigation_text_size_inactive"
-        ></com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@+id/toolbar"
+            android:background="@drawable/toolbar_shadow">
+        </View>
 
-</RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottomBar"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/fragment_container"
+                android:background="@drawable/toolbar_shadow">
+            </View>
+
+            <com.ashokvarma.bottomnavigation.BottomNavigationBar
+                android:id="@+id/bottomBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

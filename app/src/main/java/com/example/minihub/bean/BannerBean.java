@@ -2,10 +2,11 @@ package com.example.minihub.bean;
 
 import java.util.List;
 
-public class Banner {
+public class BannerBean {
+
     private List<Data> data;
-    private int errorcode;
-    private String errormsg;
+    private int errorCode;
+    private String errorMsg;
     public void setData(List<Data> data) {
         this.data = data;
     }
@@ -14,25 +15,26 @@ public class Banner {
     }
 
     public void setErrorcode(int errorcode) {
-        this.errorcode = errorcode;
+        this.errorCode = errorcode;
     }
     public int getErrorcode() {
-        return errorcode;
+        return errorCode;
     }
 
     public void setErrormsg(String errormsg) {
-        this.errormsg = errormsg;
+        this.errorMsg = errormsg;
     }
     public String getErrormsg() {
-        return errormsg;
+        return errorMsg;
     }
 
-    public class Data {
+    public static class Data {
+
 
         private String desc;
         private int id;
-        private String imagepath;
-        private int isvisible;
+        private String imagePath;
+        private int isVisible;
         private int order;
         private String title;
         private int type;
@@ -52,17 +54,17 @@ public class Banner {
         }
 
         public void setImagepath(String imagepath) {
-            this.imagepath = imagepath;
+            this.imagePath = imagepath;
         }
         public String getImagepath() {
-            return imagepath;
+            return imagePath;
         }
 
         public void setIsvisible(int isvisible) {
-            this.isvisible = isvisible;
+            this.isVisible = isvisible;
         }
         public int getIsvisible() {
-            return isvisible;
+            return isVisible;
         }
 
         public void setOrder(int order) {

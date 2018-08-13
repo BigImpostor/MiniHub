@@ -9,16 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.minihub.net.LoginService;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
-import io.reactivex.Observable;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-
-public class LoginActvity extends AppCompatActivity implements LoginContract.LoginView {
+public class LoginActivity extends AppCompatActivity implements LoginContract.LoginView {
 
     private EditText idEdit;
     private EditText psswrdEdit;
@@ -54,7 +45,7 @@ public class LoginActvity extends AppCompatActivity implements LoginContract.Log
                 user = idEdit.getText().toString();
                 psswrd = psswrdEdit.getText().toString();
                 mPresenter.login(user,psswrd);
-                Log.e(LoginActvity.class.getName(),user);
+                Log.e(LoginActivity.class.getName(),user);
             }
         });
 

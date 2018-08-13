@@ -1,52 +1,113 @@
 package com.example.minihub;
 
-import android.content.Intent;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
-import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
-import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.minihub.fragment.HomeFragment;
+import com.example.minihub.fragment.NaviFragment;
+import com.example.minihub.fragment.ProfileFragment;
+import com.example.minihub.fragment.ProjectFragment;
+import com.jaeger.library.StatusBarUtil;
+import java.util.List;
 
-import java.io.BufferedOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationBar bottomNavigationBar;
+    private Toolbar mToolbar;
+    private HomeFragment mHomeFragment;
+    private NaviFragment mNaviFragment;
+    private ProjectFragment mProjectFragment;
+    private ProfileFragment mProfileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        String user =  intent.getStringExtra("user");
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.material_teal_accent_700),50);
         initView();
     }
 
-    private void initView(){
-        bottomNavigationView = findViewById(R.id.bottomNavigation);
-        BottomNavigationItem homeItem = new BottomNavigationItem("Home",
-                ContextCompat.getColor(this,R.color.material_teal_accent_700),R.drawable.ic_home);
-        BottomNavigationItem starItem = new BottomNavigationItem("Star",
-                ContextCompat.getColor(this,R.color.material_teal_accent_700),R.drawable.ic_menu_star);
-        BottomNavigationItem notificationItem = new BottomNavigationItem("Notification",
-                ContextCompat.getColor(this,R.color.material_teal_accent_700),R.drawable.ic_menu_notifications);
-        BottomNavigationItem personItem = new BottomNavigationItem("Me",
-                ContextCompat.getColor(this,R.color.material_teal_accent_700),R.drawable.ic_menu_person);
-        bottomNavigationView.addTab(homeItem);
-        bottomNavigationView.addTab(starItem);
-        bottomNavigationView.addTab(notificationItem);
-        bottomNavigationView.addTab(personItem);
-        bottomNavigationView.willNotRecreate(true);
 
-        bottomNavigationView.setOnBottomNavigationItemClickListener(new OnBottomNavigationItemClickListener() {
+    private void initView(){
+        mToolbar = findViewById(R.id.tool_bar);
+        setSupportActionBar(mToolbar);
+        bottomNavigationBar = findViewById(R.id.bottomBar);
+        bottomNavigationBar.setBackgroundColor(getResources().getColor(R.color.material_teal_accent_700));
+        bottomNavigationBar
+                .addItem(new BottomNavigationItem(R.drawable.ic_home,"Home"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_menu_star, "Star"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_menu_notifications,"Notification"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_menu_person,"Me"))
+                .initialise();
+
+        mHomeFragment = new HomeFragment();
+        mNaviFragment = new NaviFragment();
+        mProjectFragment = new ProjectFragment();
+        mProfileFragment = new ProfileFragment();
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
-            public void onNavigationItemClick(int index) {
+            public void onTabSelected(int position) {
+                switch (position){
+                    case 0:
+                        showFragment(mHomeFragment);
+                        break;
+                    case 1:
+                        showFragment(mNaviFragment);
+                        break;
+                    case 2:
+                        showFragment(mProjectFragment);
+                        break;
+                    case 3:
+                        showFragment(mProfileFragment);
+                        break;
+                }
+            }
+            @Override
+            public void onTabUnselected(int position) {
+
+            }
+
+            @Override
+            public void onTabReselected(int position) {
 
             }
         });
+        bottomNavigationBar.selectTab(0);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.tool_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //TODO:
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void showFragment(Fragment fragment){
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if(!fragments.contains(fragment))
+            transaction.add(R.id.fragment_container,fragment);
+        transaction.show(fragment);
+        for(Fragment f : fragments){
+            if(f != fragment)
+                transaction.hide(f);
+        }
+        transaction.commit();
+    }
 }

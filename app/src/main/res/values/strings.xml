@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">MiniHub</string>
+    <string name="app_name">WanAndroid</string>
     <string name="login_activity">登录页面</string>
     <string name="edit_id">账号</string>
     <string name="edit_psswrd">密码</string>
     <string name="login_btn">登 录</string>
+    <string name="search_title">搜索</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

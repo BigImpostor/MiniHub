@@ -1,4 +1,4 @@
-package com.example.minihub;
+package com.example.minihub.bean;
 
 import java.util.Date;
 
