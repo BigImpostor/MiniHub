@@ -24,10 +24,6 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-;
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
 
 
     public static ProfileFragment newInstance(String param1, String param2) {
@@ -42,10 +38,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -60,18 +52,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void onButtonPressed(Uri uri) {
 
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 
 }

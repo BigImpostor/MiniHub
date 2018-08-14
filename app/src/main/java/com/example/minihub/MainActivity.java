@@ -28,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     private ProjectFragment mProjectFragment;
     private ProfileFragment mProfileFragment;
 
+    private static final String HOME = "首页";
+    private static final String ARTICLE = "文章";
+    private static final String PROJECT = "项目";
+    private static final String PROFILE = "我";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationBar = findViewById(R.id.bottomBar);
         bottomNavigationBar.setBackgroundColor(getResources().getColor(R.color.material_teal_accent_700));
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_home,"Home"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_menu_star, "Star"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_menu_notifications,"Notification"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_menu_person,"Me"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_home, HOME))
+                .addItem(new BottomNavigationItem(R.drawable.ic_menu_article, ARTICLE))
+                .addItem(new BottomNavigationItem(R.drawable.ic_menu_project,PROJECT))
+                .addItem(new BottomNavigationItem(R.drawable.ic_menu_person,PROFILE))
                 .initialise();
 
         mHomeFragment = new HomeFragment();

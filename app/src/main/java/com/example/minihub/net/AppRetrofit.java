@@ -47,7 +47,7 @@ public enum AppRetrofit {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Log.e(HttpLoggingInterceptor.class.getName(),message);
+               Log.e(HttpLoggingInterceptor.class.getName(),message);
             }
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

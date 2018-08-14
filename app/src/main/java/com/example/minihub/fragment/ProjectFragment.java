@@ -1,47 +1,48 @@
 package com.example.minihub.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.bumptech.glide.util.LogTime;
 import com.example.minihub.R;
+import com.example.minihub.SimplifyObserver;
+import com.example.minihub.adapter.ProjectAdapter;
+import com.example.minihub.bean.Project;
+import com.example.minihub.net.AppRetrofit;
+import com.example.minihub.net.WanAndroidApi;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class ProjectFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    private String mParam1;
-    private String mParam2;
-
+    private RecyclerView mRecyclerView;
+    private ProjectAdapter mAdapter;
+    private CompositeDisposable mCompositeDisposable;
 
     public ProjectFragment() {
 
     }
 
 
-    public static ProjectFragment newInstance(String param1, String param2) {
-        ProjectFragment fragment = new ProjectFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -50,21 +51,67 @@ public class ProjectFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_project, container, false);
     }
 
-    public void onButtonPressed(Uri uri) {
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
+        loadData();
+    }
+
+    private void initView(View view){
+        mRecyclerView = view.findViewById(R.id.project_recyclerView);
+
+    }
+
+
+    private void loadData(){
+        Observable<Project> observable = AppRetrofit.INSTANCE.getRetrofit(getContext())
+                                            .create(WanAndroidApi.class)
+                                            .project();
+
+        Disposable disposable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribeWith(new SimplifyObserver<Project>() {
+            @Override
+            public void onNext(Project project) {
+                super.onNext(project);
+                mAdapter = new ProjectAdapter(project.getData().getDatas(),getActivity());
+                mRecyclerView.setAdapter(mAdapter);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                mAdapter.setOnItemClickListener(new ProjectAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int pos) {
+                        Toast.makeText(getContext(),"Click"+pos,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Log.e(ProjectFragment.class.getName(),e.toString());
+            }
+
+            @Override
+            public void onComplete() {
+                super.onComplete();
+            }
+        });
+
+        addSubscribe(disposable);
 
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCompositeDisposable.clear();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
+    protected void addSubscribe(Disposable disposable) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        mCompositeDisposable.add(disposable);
     }
-
 
 }

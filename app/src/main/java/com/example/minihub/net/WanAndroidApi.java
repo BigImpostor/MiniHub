@@ -1,6 +1,7 @@
 package com.example.minihub.net;
 
 import com.example.minihub.bean.Article;
+import com.example.minihub.bean.Project;
 import com.example.minihub.bean.User;
 import com.example.minihub.bean.BannerBean;
 
@@ -29,5 +30,8 @@ public interface WanAndroidApi {
 
     @GET("article/list/1/json")
     Observable<Article> article();
+
+    @GET("project/list/1/json?cid=294")
+    Observable<Project> project();
 
 }
