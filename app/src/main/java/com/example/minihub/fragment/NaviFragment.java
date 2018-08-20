@@ -22,17 +22,10 @@ public class NaviFragment extends Fragment {
     private String mParam2;
 
 
-    public NaviFragment() {
-        // Required empty public constructor
-    }
 
 
-    public static NaviFragment newInstance(String param1, String param2) {
+    public static NaviFragment newInstance() {
         NaviFragment fragment = new NaviFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 

@@ -1,6 +1,8 @@
 package com.example.minihub.net;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.minihub.AppConfig;
@@ -10,14 +12,21 @@ import com.example.minihub.utils.Utils;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.CookiePersistor;
+import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.Cookie;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -86,11 +95,13 @@ public enum AppRetrofit {
         File cacheFile = new File(MyApplication.getInstance().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile,CACHE_SIZE);
 
-//        ClearableCookieJar cookieJar =
-//                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+
+        ClearableCookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new EasyCookiePersistor(context));
         
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .cache(cache)
+                .cookieJar(cookieJar)
                 .connectTimeout(1000, TimeUnit.MILLISECONDS)
                 .addInterceptor(interceptor)
                 .addNetworkInterceptor(cacheInterceptor)
@@ -109,6 +120,70 @@ public enum AppRetrofit {
         return retrofit;
     }
 
+    public boolean isHasCookie(Context context){
+        return new EasyCookiePersistor(context).isHasCookie();
+    }
 
+
+    public class EasyCookiePersistor implements CookiePersistor{
+
+
+        private final SharedPreferences sharedPreferences;
+
+        public EasyCookiePersistor(Context context) {
+            sharedPreferences = context.getSharedPreferences("Cookie",Context.MODE_PRIVATE);
+        }
+
+        @Override
+        public List<Cookie> loadAll() {
+            List<Cookie> cookies = new ArrayList<>(sharedPreferences.getAll().size());
+
+            for (Map.Entry<String, ?> entry : sharedPreferences.getAll().entrySet()) {
+                String serializedCookie = (String) entry.getValue();
+                Cookie cookie = new SerializableCookie().decode(serializedCookie);
+                if (cookie != null) {
+                    cookies.add(cookie);
+                }
+            }
+            return cookies;
+        }
+
+        @Override
+        public void saveAll(Collection<Cookie> cookies) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            for (Cookie cookie : cookies) {
+                editor.putString(createCookieKey(cookie), new SerializableCookie().encode(cookie));
+            }
+            editor.commit();
+        }
+
+        @Override
+        public void removeAll(Collection<Cookie> cookies) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            for (Cookie cookie : cookies) {
+                editor.remove(createCookieKey(cookie));
+            }
+            editor.commit();
+        }
+
+        private String createCookieKey(Cookie cookie) {
+            return (cookie.secure() ? "https" : "http") + "://" + cookie.domain() + cookie.path() + "|" + cookie.name();
+        }
+
+        public boolean isHasCookie(){
+            List<Cookie> cookies = loadAll();
+            for(Cookie c:cookies){
+                String str = sharedPreferences.getString(createCookieKey(c),"");
+                if(TextUtils.isEmpty(str))
+                    return false;
+            }
+            return true;
+        }
+
+        @Override
+        public void clear() {
+            sharedPreferences.edit().clear().commit();
+        }
+    }
 
 }

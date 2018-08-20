@@ -1,5 +1,6 @@
 package com.example.minihub.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.LogTime;
+import com.example.minihub.MainActivity;
 import com.example.minihub.R;
 import com.example.minihub.SimplifyObserver;
+import com.example.minihub.WebActivity;
 import com.example.minihub.adapter.ProjectAdapter;
 import com.example.minihub.bean.Project;
 import com.example.minihub.net.AppRetrofit;
@@ -33,8 +35,11 @@ public class ProjectFragment extends Fragment {
     private ProjectAdapter mAdapter;
     private CompositeDisposable mCompositeDisposable;
 
-    public ProjectFragment() {
+    private static final String Tag = "ProjectFragment";
 
+    public static ProjectFragment newInstance(){
+        ProjectFragment instance = new ProjectFragment();
+        return instance;
     }
 
 
@@ -72,7 +77,7 @@ public class ProjectFragment extends Fragment {
 
         Disposable disposable = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribeWith(new SimplifyObserver<Project>() {
             @Override
-            public void onNext(Project project) {
+            public void onNext(final Project project) {
                 super.onNext(project);
                 mAdapter = new ProjectAdapter(project.getData().getDatas(),getActivity());
                 mRecyclerView.setAdapter(mAdapter);
@@ -80,7 +85,10 @@ public class ProjectFragment extends Fragment {
                 mAdapter.setOnItemClickListener(new ProjectAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int pos) {
-                        Toast.makeText(getContext(),"Click"+pos,Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(),WebActivity.class);
+                        String link = project.getData().getDatas().get(pos).getLink();
+                        intent.putExtra("link",link);
+                        startActivity(intent);
                     }
                 });
             }
@@ -113,5 +121,6 @@ public class ProjectFragment extends Fragment {
         }
         mCompositeDisposable.add(disposable);
     }
+
 
 }

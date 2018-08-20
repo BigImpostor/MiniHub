@@ -14,4 +14,10 @@ public class Utils {
         assert connectivityManager != null;
         return connectivityManager.getActiveNetworkInfo() != null;
     }
+
+
+    public static int dp2px(float dpValue) {
+        final float scale = MyApplication.getInstance().getApplicationContext().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 }

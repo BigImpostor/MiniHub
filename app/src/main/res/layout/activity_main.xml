@@ -12,21 +12,37 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--<FrameLayout-->
+            <!--android:id="@+id/toolbar_container"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/tool_bar"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="?attr/actionBarSize"-->
+                <!--android:background="@color/material_teal_accent_700"-->
+                <!--app:titleTextColor="@color/white"/>-->
+
+            <!--<com.miguelcatalan.materialsearchview.MaterialSearchView-->
+                <!--android:id="@+id/search_view"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+        <!--</FrameLayout>-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentTop="true"
             android:background="@color/material_teal_accent_700"
-            app:titleTextColor="@color/white"
-            />
-
+            app:titleTextColor="@color/white"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_below="@+id/toolbar"
-            android:background="@drawable/toolbar_shadow">
+            android:background="@drawable/view_shadow">
         </View>
+
+
 
 
         <RelativeLayout
@@ -40,12 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/bottomBar"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_below="@id/fragment_container"
-                android:background="@drawable/toolbar_shadow">
-            </View>
+
 
             <com.ashokvarma.bottomnavigation.BottomNavigationBar
                 android:id="@+id/bottomBar"
