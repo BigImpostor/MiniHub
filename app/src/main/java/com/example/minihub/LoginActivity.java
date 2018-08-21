@@ -15,7 +15,7 @@ import com.example.minihub.net.AppRetrofit;
 public class LoginActivity extends AppCompatActivity implements LoginContract.LoginView,RegisterDialog.OnRegisterListener {
 
     private EditText idEdit;
-    private EditText psswrdEdit;
+    private EditText passwordEdit;
     private Button commitBtn;
     private Button registerBtn;
 
@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         mPresenter = new LoginPresenter();
         mPresenter.attachView(this);
         initView();
@@ -38,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
         if (isHasCookie()){
             startActivity(new Intent(this,MainActivity.class));
         }
+
     }
 
     private boolean isHasCookie(){
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
 
     private void initView(){
         idEdit = findViewById(R.id.edit_id);
-        psswrdEdit = findViewById(R.id.edit_password);
+        passwordEdit = findViewById(R.id.edit_password);
         commitBtn = findViewById(R.id.login_btn);
         registerBtn = findViewById(R.id.register_btn);
     }
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
             @Override
             public void onClick(View view) {
                 user = idEdit.getText().toString();
-                psswrd = psswrdEdit.getText().toString();
+                psswrd = passwordEdit.getText().toString();
                 mPresenter.login(user,psswrd);
                 Log.e(LoginActivity.class.getName(),user);
             }
@@ -72,11 +72,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
         });
     }
 
-    /**
-     * LoginContract.View
-     * @return
-     */
-
     @Override
     public Context getContext() {
         return this;
@@ -86,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     public void startNextActivity(Intent intent) {
         startActivity(intent);
     }
+
 
     @Override
     public void register(String usrname, String password, String repassword) {

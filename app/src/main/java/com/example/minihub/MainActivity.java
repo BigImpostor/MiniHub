@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(mToolbar);
         bottomNavigationBar = findViewById(R.id.bottomBar);
-        bottomNavigationBar.setBackgroundColor(getResources().getColor(R.color.material_teal_accent_700));
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home, HOME))
                 .addItem(new BottomNavigationItem(R.drawable.ic_menu_article, ARTICLE))
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         mNaviFragment = NaviFragment.newInstance();
         mProjectFragment = ProjectFragment.newInstance();
         mProfileFragment = ProfileFragment.newInstance();
-
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
@@ -99,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationBar.selectTab(0);
+
+
     }
 
 
@@ -108,20 +108,13 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.search_btn).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                return false;
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                return true;
             }
         });
         return true;
     }
-
-
-
-
-    //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        //TODO:
-//        return super.onOptionsItemSelected(item);
-//    }
 
 
     private void showFragment(Fragment fragment){
@@ -139,25 +132,27 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-//            exit();
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-//
-//
-//    private void exit(){
-//        if(System.currentTimeMillis() - exitTime > 2000){
-//            Toast.makeText(MainActivity.this, "再按一次退出返回桌面", Toast.LENGTH_SHORT).show();
-//            exitTime = System.currentTimeMillis();
-//        }else {
-//            finish();
-//            System.exit(0);
-//        }
-//    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    private void exit(){
+        if(System.currentTimeMillis() - exitTime > 2000){
+            Toast.makeText(MainActivity.this, "再按一次退出返回桌面", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        }else {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+        }
+    }
 
     @Override
     protected void onDestroy() {

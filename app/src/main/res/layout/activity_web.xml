@@ -5,8 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".WebActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/webActivity_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/material_teal_accent_700"
+        app:titleTextColor="@color/white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/view_shadow"/>
 
     <include layout="@layout/content_web" />
 

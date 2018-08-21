@@ -12,13 +12,15 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
+import com.jaeger.library.StatusBarUtil;
+
 import java.security.Key;
 
 public class WebActivity extends AppCompatActivity {
 
     private WebView webView;
-    private int requestCode;
     private LinearLayout rootView;
+    private Toolbar mToolbar;
 
     private static final String Tag = "WebActivity";
     @Override
@@ -27,13 +29,16 @@ public class WebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         webView = findViewById(R.id.webView);
         rootView = findViewById(R.id.root_view);
+        mToolbar = findViewById(R.id.webActivity_toolBar);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.material_teal_accent_700),50);
         action();
     }
 
     private void action(){
         Intent intent = getIntent();
-//        requestCode = intent.getIntExtra("requestCode",0);
         String link = intent.getStringExtra("link");
+        String title = intent.getStringExtra("title");
+        mToolbar.setTitle(title);
         webView.loadUrl(link);
     }
 
@@ -49,6 +54,8 @@ public class WebActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        rootView.removeView(webView);
+        webView.destroy();
         Log.e(Tag,"onDestroy");
     }
 

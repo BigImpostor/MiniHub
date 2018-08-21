@@ -14,10 +14,15 @@ import com.example.minihub.R;
 public class ProfileAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
+    private OnClickItemListener mListener;
 
     public ProfileAdapter(Context context) {
         super();
         this.mContext = context;
+    }
+
+    public void setOnClickItemListener(OnClickItemListener listener){
+        this.mListener = listener;
     }
 
     @NonNull
@@ -28,7 +33,7 @@ public class ProfileAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ProfileViewHolder viewHolder = (ProfileViewHolder) holder;
         switch (position){
             case 0:
@@ -36,15 +41,38 @@ public class ProfileAdapter extends RecyclerView.Adapter {
                 viewHolder.choice.setText("我的收藏");
                 break;
             case 1:
+                viewHolder.icon.setImageResource(R.drawable.ic_about);
+                viewHolder.choice.setText("关于");
+                break;
+            case 2:
                 viewHolder.icon.setImageResource(R.drawable.ic_exit);
                 viewHolder.choice.setText("退出登录");
                 break;
         }
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (position){
+                    case 0:
+                        if (mListener != null)
+                            mListener.showCollection();
+                        break;
+                    case 1:
+                        if (mListener != null)
+                            mListener.about();
+                        break;
+                    case 2:
+                        if (mListener != null)
+                            mListener.exit();
+                        break;
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 
     private class ProfileViewHolder extends RecyclerView.ViewHolder{
@@ -58,4 +86,11 @@ public class ProfileAdapter extends RecyclerView.Adapter {
         }
     }
 
+
+
+    public interface OnClickItemListener{
+        void showCollection();
+        void exit();
+        void about();
+    }
 }

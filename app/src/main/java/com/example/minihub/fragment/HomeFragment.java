@@ -128,6 +128,8 @@ public class HomeFragment extends Fragment {
                                 Intent intent = new Intent(getActivity(),WebActivity.class);
                                 String link = dataList.get(pos).getLink();
                                 intent.putExtra("link",link);
+                                String title = dataList.get(pos).getTitle();
+                                intent.putExtra("title",title);
                                 startActivity(intent);
                             }
 

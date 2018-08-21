@@ -29,7 +29,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileAdapter.OnClickItemListener{
 
     private static final String Tag = "ProfileFragment";
 
@@ -62,7 +62,8 @@ public class ProfileFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void showCollection(){
+    @Override
+    public void showCollection(){
         Observable<Collection> observable = AppRetrofit.INSTANCE.getRetrofit(getContext())
                                                                 .create(WanAndroidApi.class)
                                                                 .collection();
@@ -78,6 +79,16 @@ public class ProfileFragment extends Fragment {
 
                                             });
         addDisposable(disposable);
+    }
+
+    @Override
+    public void exit() {
+
+    }
+
+    @Override
+    public void about() {
+
     }
 
 

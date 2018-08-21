@@ -63,6 +63,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                app:bnbBackgroundStyle="background_style_static"
+                app:bnbMode="mode_fixed"
+                app:bnbActiveColor="@color/white"
+                app:bnbInactiveColor="@color/material_grey_350"
+                app:bnbBackgroundColor="@color/material_teal_accent_700"
                 />
 
         </RelativeLayout>

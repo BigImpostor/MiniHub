@@ -88,6 +88,8 @@ public class ProjectFragment extends Fragment {
                         Intent intent = new Intent(getContext(),WebActivity.class);
                         String link = project.getData().getDatas().get(pos).getLink();
                         intent.putExtra("link",link);
+                        String title = project.getData().getDatas().get(pos).getTitle();
+                        intent.putExtra("title",title);
                         startActivity(intent);
                     }
                 });

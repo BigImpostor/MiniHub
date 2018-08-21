@@ -72,6 +72,7 @@ public class LoginPresenter<V extends LoginContract.LoginView> implements LoginC
                                                 public void onComplete() {
                                                     super.onComplete();
                                                     Intent intent = new Intent(mView.getContext(), MainActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                                     mView.startNextActivity(intent);
                                                 }
                                             });
