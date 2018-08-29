@@ -12,26 +12,29 @@
         android:id="@+id/searchActivity_Toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/material_teal_accent_700">
+        android:background="@color/material_teal_accent_700"
+        app:title=" ">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_centerVertical="true"
             android:background="@drawable/ic_back"/>
-
-        <SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:queryHint="@string/search_title"
-            />
-
     </android.support.v7.widget.Toolbar>
 
-
-    <FrameLayout
-        android:id="@+id/search_container"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/activity_search_swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_activity_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

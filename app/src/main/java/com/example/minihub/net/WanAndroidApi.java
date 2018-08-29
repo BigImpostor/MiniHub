@@ -3,8 +3,10 @@ package com.example.minihub.net;
 import com.example.minihub.bean.Article;
 import com.example.minihub.bean.Collection;
 import com.example.minihub.bean.Login;
+import com.example.minihub.bean.Navigation;
 import com.example.minihub.bean.Project;
 import com.example.minihub.bean.BannerBean;
+import com.example.minihub.bean.Query;
 import com.example.minihub.bean.Register;
 
 
@@ -14,6 +16,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface WanAndroidApi {
 
@@ -30,13 +33,23 @@ public interface WanAndroidApi {
     @GET("banner/json")
     Observable<BannerBean> banner();
 
-    @GET("article/list/1/json")
-    Observable<Article> article();
+    @GET("article/list/{page}/json")
+    Observable<Article> article(@Path("page")int page);
 
     @GET("project/list/1/json?cid=294")
     Observable<Project> project();
 
     @GET("lg/collect/list/0/json")
     Observable<Collection> collection();
+
+    @POST("article/query/{page}/json")
+    @FormUrlEncoded
+    Observable<Query> query(@Path("page")int page, @Field("k") String k);
+
+    @GET("tree/json")
+    Observable<Navigation> navigation();
+
+    @GET("article/list/{page}/json")
+    Observable<Article> navigationArticle(@Path("page")int page,@retrofit2.http.Query("cid") int cid);
 
 }

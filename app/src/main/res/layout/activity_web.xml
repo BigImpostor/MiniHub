@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_view"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".WebActivity">
+
+    <ProgressBar
+        android:id="@+id/webActivity_progressBar"
+        android:layout_centerInParent="true"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:visibility="visible"/>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/webActivity_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/material_teal_accent_700"
+        android:layout_alignParentTop="true"
         app:titleTextColor="@color/white"/>
 
     <View
+        android:id="@+id/showView"
         android:layout_width="match_parent"
         android:layout_height="3dp"
+        android:layout_below="@id/webActivity_toolBar"
         android:background="@drawable/view_shadow"/>
 
-    <include layout="@layout/content_web" />
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/showView"
+        android:visibility="invisible"/>
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.minihub.MainActivity;
 import com.example.minihub.WebActivity;
+import com.example.minihub.adapter.BaseAdapter;
+import com.example.minihub.adapter.BaseRecyclerOnScrollerListener;
 import com.example.minihub.net.AppRetrofit;
 import com.example.minihub.HomeRecyclerViewAdapter;
 import com.example.minihub.R;
@@ -47,11 +49,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
 
-    private Banner banner;
     private RecyclerView recyclerView;
     private HomeRecyclerViewAdapter mHomeRecyclerViewAdapter;
     private CompositeDisposable mCompositeDisposable;
-    private List<Article.Datas> dataList;
+    private List<Article.Datas> dataList = new ArrayList<>();
+    private List<String> imagesList = new ArrayList<>();
     private BannerDbHelper dbHelper;
     private SQLiteDatabase database;
 
@@ -60,10 +62,15 @@ public class HomeFragment extends Fragment {
 
     private static final String Tag = "HomeFragment";
 
+    private int page = 0;
+    private int curPage = 1;
+    private int totalPage = 10000; //假设总页面尽量大
+
     public static HomeFragment newInstance(){
         HomeFragment instance = new HomeFragment();
         return instance;
     }
+
 
 
     @Override
@@ -80,21 +87,38 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        banner = view.findViewById(R.id.banner);
-        recyclerView = view.findViewById(R.id.home_recycler_view);
         dbHelper = new BannerDbHelper(getActivity());
         database = dbHelper.getWritableDatabase();
+        initView(view);
         loadData();
+    }
+
+    private void initView(View view){
+        recyclerView = view.findViewById(R.id.home_recycler_view);
+        mHomeRecyclerViewAdapter = new HomeRecyclerViewAdapter(getActivity(),dataList,imagesList);
+        recyclerView.setAdapter(mHomeRecyclerViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addOnScrollListener(new BaseRecyclerOnScrollerListener() {
+            @Override
+            public void loadMore() {
+                loadData();
+            }
+        });
     }
 
 
     private void loadData(){
+        if (curPage == totalPage){
+            mHomeRecyclerViewAdapter.loadingState(BaseAdapter.STATE_COMPLETE);
+        }else{
+            mHomeRecyclerViewAdapter.loadingState(BaseAdapter.STATE_LOADING);
+        }
         Observable<BannerBean> bannerObservable = AppRetrofit.INSTANCE.getRetrofit(getContext())
                                                             .create(WanAndroidApi.class)
                                                             .banner();
         Observable<Article> articleObservable = AppRetrofit.INSTANCE.getRetrofit(getContext())
                 .create(WanAndroidApi.class)
-                .article();
+                .article(page++);
 
         addSubscribe(Observable.zip(bannerObservable, articleObservable, new BiFunction<BannerBean, Article, HashMap<String,Object>>() {
             @Override
@@ -112,16 +136,14 @@ public class HomeFragment extends Fragment {
                         super.onNext(map);
                         BannerBean bannerBean = (BannerBean) map.get(BANNER_KEY);
                         Article article = (Article) map.get(ARTICLE_KEY);
-
                         List<String> images = new ArrayList<>();
                         for(int i = 0; i < bannerBean.getData().size(); i++){
                             images.add(bannerBean.getData().get(i).getImagepath());
                         }
-                        banner.setImageLoader(new GlideImageLoader()).setImages(images).start();
-                        dataList = article.getData().getDatas();
-                        mHomeRecyclerViewAdapter = new HomeRecyclerViewAdapter(getActivity(),dataList);
-                        recyclerView.setAdapter(mHomeRecyclerViewAdapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        curPage = article.getData().getCurpage();
+                        totalPage = article.getData().getPagecount();
+                        mHomeRecyclerViewAdapter.addArticleDatas(article.getData().getDatas());
+                        mHomeRecyclerViewAdapter.addImagesList(images);
                         mHomeRecyclerViewAdapter.setOnItemClickListener(new HomeRecyclerViewAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(int pos) {
@@ -132,7 +154,6 @@ public class HomeFragment extends Fragment {
                                 intent.putExtra("title",title);
                                 startActivity(intent);
                             }
-
                         });
                     }
 
@@ -232,7 +253,7 @@ public class HomeFragment extends Fragment {
         for(int i = 0; i < bannerDatas.size(); i++){
             imagesList.add(bannerDatas.get(i).getImagepath());
         }
-        banner.setImages(imagesList).setImageLoader(new GlideImageLoader()).start();
+
     }
 
     private void deleteData(){
@@ -243,7 +264,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        banner.stopAutoPlay();
     }
 
     @Override
@@ -262,13 +282,4 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private class GlideImageLoader extends ImageLoader{
-
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-
-            Glide.with(context).load(path).into(imageView);
-
-        }
-    }
 }

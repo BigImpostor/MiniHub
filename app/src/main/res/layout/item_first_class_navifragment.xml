@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    >
+
+
+<TextView
+    android:id="@+id/first_class_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_centerInParent="true"
+    android:textSize="14sp">
+
+</TextView>
+
+</RelativeLayout>

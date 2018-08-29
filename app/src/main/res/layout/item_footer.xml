@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <ProgressBar
+        android:id="@+id/loading_progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/loading_tips"
+        />
+
+    <TextView
+        android:id="@+id/loading_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="15dp"
+        android:textColor="@color/material_teal_500"
+        android:text="正在加载..."
+        android:textSize="18dp"/>
+
+    <View
+        android:id="@+id/left_line"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:background="@color/material_teal_500"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/load_end_tips"
+        />
+
+    <TextView
+        android:id="@+id/load_end_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="我是有底线的"
+        android:textColor="@color/material_teal_500"
+        android:layout_margin="5dp"
+        android:textSize="18dp"
+        />
+
+    <View
+        android:id="@+id/right_line"
+        android:layout_width="100dp"
+        android:layout_height="2dp"
+        android:background="@color/material_teal_500"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/load_end_tips"
+        />
+
+</RelativeLayout>

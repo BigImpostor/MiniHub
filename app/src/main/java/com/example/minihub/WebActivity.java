@@ -9,8 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.jaeger.library.StatusBarUtil;
 
@@ -19,8 +24,9 @@ import java.security.Key;
 public class WebActivity extends AppCompatActivity {
 
     private WebView webView;
-    private LinearLayout rootView;
+    private RelativeLayout rootView;
     private Toolbar mToolbar;
+    private ProgressBar progressBar;
 
     private static final String Tag = "WebActivity";
     @Override
@@ -30,6 +36,7 @@ public class WebActivity extends AppCompatActivity {
         webView = findViewById(R.id.webView);
         rootView = findViewById(R.id.root_view);
         mToolbar = findViewById(R.id.webActivity_toolBar);
+        progressBar = findViewById(R.id.webActivity_progressBar);
         StatusBarUtil.setColor(this,getResources().getColor(R.color.material_teal_accent_700),50);
         action();
     }
@@ -40,6 +47,19 @@ public class WebActivity extends AppCompatActivity {
         String title = intent.getStringExtra("title");
         mToolbar.setTitle(title);
         webView.loadUrl(link);
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100){
+                    webView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }else{
+                    webView.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
 
