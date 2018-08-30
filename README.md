@@ -1,8 +1,9 @@
 # WanAndroid
-基于www.wanandroid.com提供的API实现的第三方客户端。
-使用Rxjava+Retrofit进行网络请求。
-把较为庞大的Activity使用MVP模式解耦。
-目前实现的功能有，注册，登录，搜索，分类导航等功能。
+项目基于www.wanandroid.com提供的API实现的第三方客户端。
+使用了Rxjava+Retrofit进行网络请求。
+作为实践只把较为其中的一个Activity使用MVP模式解耦。
+目前实现的功能有，注册，登录，搜索，分类导航等功能，实现的效果如下图。
+由于迫于实现完功能，所以项目中的代码比较乱，目前仍在迭代中，准备重构，以及修复一些Bug。。。
 
  ## 首页
 <div align=center>
