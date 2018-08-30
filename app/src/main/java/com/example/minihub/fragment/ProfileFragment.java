@@ -1,6 +1,7 @@
 package com.example.minihub.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,22 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 
+import com.example.minihub.activity.CollectionActivity;
 import com.example.minihub.R;
 
-import com.example.minihub.SimplifyObserver;
+import com.example.minihub.activity.WebActivity;
 import com.example.minihub.adapter.ProfileAdapter;
-import com.example.minihub.bean.Collection;
-import com.example.minihub.net.AppRetrofit;
-import com.example.minihub.net.WanAndroidApi;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class ProfileFragment extends Fragment implements ProfileAdapter.OnClickItemListener{
@@ -34,6 +29,7 @@ public class ProfileFragment extends Fragment implements ProfileAdapter.OnClickI
     private static final String Tag = "ProfileFragment";
 
     private RecyclerView recyclerView;
+    private ProfileAdapter mAdapter;
     private CompositeDisposable mCompositeDisposable;
 
     public static ProfileFragment newInstance() {
@@ -57,38 +53,31 @@ public class ProfileFragment extends Fragment implements ProfileAdapter.OnClickI
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.profile_recyclerView);
-        ProfileAdapter adapter = new ProfileAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        mAdapter = new ProfileAdapter(getContext());
+        recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter.setOnClickItemListener(this);
     }
 
     @Override
     public void showCollection(){
-        Observable<Collection> observable = AppRetrofit.INSTANCE.getRetrofit(getContext())
-                                                                .create(WanAndroidApi.class)
-                                                                .collection();
-
-        Disposable disposable = observable.subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribeWith(new SimplifyObserver<Collection>(){
-                                                @Override
-                                                public void onNext(Collection collection) {
-                                                    super.onNext(collection);
-                                                    Log.e(Tag,collection.getData().getDatas().get(0).getLink());
-                                                }
-
-                                            });
-        addDisposable(disposable);
+        Log.e("ProfileFragment:","showCollection");
+        Intent intent = new Intent(getActivity(), CollectionActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void exit() {
-
+        getActivity().finish();
     }
 
     @Override
     public void about() {
-
+        String link = "https://github.com/BigImpostor/WanAndroid";
+        Intent intent = new Intent(getActivity(), WebActivity.class);
+        intent.putExtra("link", link);
+        intent.putExtra("title", "Github");
+        startActivity(intent);
     }
 
 
@@ -100,4 +89,13 @@ public class ProfileFragment extends Fragment implements ProfileAdapter.OnClickI
 
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mCompositeDisposable != null){
+            mCompositeDisposable.clear();
+        }
+
+    }
 }

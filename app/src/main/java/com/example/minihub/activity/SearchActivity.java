@@ -1,4 +1,4 @@
-package com.example.minihub;
+package com.example.minihub.activity;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.minihub.R;
+import com.example.minihub.SimplifyObserver;
 import com.example.minihub.adapter.BaseAdapter;
 import com.example.minihub.adapter.BaseRecyclerOnScrollerListener;
 import com.example.minihub.adapter.QueryAdapter;

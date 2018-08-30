@@ -5,31 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ArticleListActivity">
+    tools:context=".activity.CollectionActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/article_activity_toolBar"
+        android:id="@+id/collection_activity_toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:title="我的收藏"
         app:titleTextColor="@color/white"
         android:background="@color/material_teal_accent_700"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/article_activity_toolBar"
+        android:layout_below="@id/collection_activity_toolBar"
         android:background="@drawable/view_shadow"/>
 
     <ProgressBar
-        android:id="@+id/article_activity_progressBar"
+        android:id="@+id/collection_activity_progressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/article_list_recyclerView"
+        android:id="@+id/collection_list_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        android:layout_below="@id/article_activity_toolBar"/>
+        android:layout_below="@id/collection_activity_toolBar"/>
 </RelativeLayout>

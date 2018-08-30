@@ -1,4 +1,4 @@
-package com.example.minihub;
+package com.example.minihub.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.minihub.R;
 import com.example.minihub.adapter.BaseAdapter;
 import com.example.minihub.bean.Article;
 import com.youth.banner.Banner;

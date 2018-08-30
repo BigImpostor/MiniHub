@@ -2,7 +2,6 @@ package com.example.minihub.fragment;
 
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,15 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.example.minihub.MainActivity;
-import com.example.minihub.WebActivity;
+import com.example.minihub.activity.WebActivity;
 import com.example.minihub.adapter.BaseAdapter;
 import com.example.minihub.adapter.BaseRecyclerOnScrollerListener;
 import com.example.minihub.net.AppRetrofit;
-import com.example.minihub.HomeRecyclerViewAdapter;
+import com.example.minihub.adapter.HomeRecyclerViewAdapter;
 import com.example.minihub.R;
 import com.example.minihub.SimplifyObserver;
 import com.example.minihub.bean.Article;
@@ -32,8 +28,6 @@ import com.example.minihub.bean.BannerBean;
 import com.example.minihub.net.WanAndroidApi;
 import com.example.minihub.sqlite.ArticleSql;
 import com.example.minihub.sqlite.BannerDbHelper;
-import com.youth.banner.Banner;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -13,12 +13,21 @@ import com.example.minihub.bean.Article;
 
 import java.util.List;
 
-public class ArticleAdatper extends BaseAdapter{
+public class ArticleAdapter extends BaseAdapter{
 
     private List<Article.Datas> articleList;
 
+    private OnClickItemListener mListener;
 
-    public ArticleAdatper(Context context,List<Article.Datas> articles) {
+    public void setOnClickItemListener(OnClickItemListener listener){
+        this.mListener = listener;
+    }
+
+    public interface OnClickItemListener{
+        void onClickItem(int pos);
+    }
+
+    public ArticleAdapter(Context context, List<Article.Datas> articles) {
         super(context);
         this.articleList = articles;
     }
@@ -35,13 +44,21 @@ public class ArticleAdatper extends BaseAdapter{
     }
 
     @Override
-    protected void bindItemHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    protected void bindItemHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ArticleHolder){
             ArticleHolder articleHolder = (ArticleHolder) holder;
             articleHolder.author.setText(articleList.get(position).getAuthor());
             articleHolder.desc.setText(articleList.get(position).getTitle());
             articleHolder.date.setText(articleList.get(position).getNiceDate());
             articleHolder.chapter.setText(articleList.get(position).getChapterName());
+            articleHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null){
+                        mListener.onClickItem(position);
+                    }
+                }
+            });
         }
 
     }

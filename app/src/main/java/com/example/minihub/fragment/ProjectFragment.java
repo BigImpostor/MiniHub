@@ -11,12 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.minihub.MainActivity;
 import com.example.minihub.R;
 import com.example.minihub.SimplifyObserver;
-import com.example.minihub.WebActivity;
+import com.example.minihub.activity.WebActivity;
 import com.example.minihub.adapter.ProjectAdapter;
 import com.example.minihub.bean.Project;
 import com.example.minihub.net.AppRetrofit;

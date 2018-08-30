@@ -27,11 +27,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".WebActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".ArticleListActivity"></activity>
+        <activity android:name=".activity.WebActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.ArticleListActivity" />
+        <activity android:name=".activity.CollectionActivity"></activity>
     </application>
 
 </manifest>

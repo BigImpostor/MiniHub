@@ -1,4 +1,4 @@
-package com.example.minihub;
+package com.example.minihub.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -14,12 +14,12 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.minihub.R;
 import com.example.minihub.fragment.HomeFragment;
 import com.example.minihub.fragment.NaviFragment;
 import com.example.minihub.fragment.ProfileFragment;
 import com.example.minihub.fragment.ProjectFragment;
 import com.jaeger.library.StatusBarUtil;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationBar = findViewById(R.id.bottomBar);
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home, HOME))
-                .addItem(new BottomNavigationItem(R.drawable.ic_menu_article, ARTICLE))
+                .addItem(new BottomNavigationItem(R.drawable.ic_menu_navi, ARTICLE))
                 .addItem(new BottomNavigationItem(R.drawable.ic_menu_project,PROJECT))
                 .addItem(new BottomNavigationItem(R.drawable.ic_menu_person,PROFILE))
                 .initialise();

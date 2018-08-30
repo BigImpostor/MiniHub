@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.minihub.activity.MainActivity;
 import com.example.minihub.bean.Login;
 import com.example.minihub.bean.Register;
 import com.example.minihub.net.AppRetrofit;

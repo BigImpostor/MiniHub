@@ -39,8 +39,8 @@ public interface WanAndroidApi {
     @GET("project/list/1/json?cid=294")
     Observable<Project> project();
 
-    @GET("lg/collect/list/0/json")
-    Observable<Collection> collection();
+    @GET("lg/collect/list/{page}/json")
+    Observable<Article> collection(@Path("page")int page);
 
     @POST("article/query/{page}/json")
     @FormUrlEncoded

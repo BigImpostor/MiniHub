@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.minihub.AppConfig;
-import com.example.minihub.MainActivity;
 import com.example.minihub.MyApplication;
 import com.example.minihub.utils.Utils;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
@@ -14,7 +13,6 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.CookiePersistor;
 import com.franmontiel.persistentcookiejar.persistence.SerializableCookie;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +25,9 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Cookie;
-import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

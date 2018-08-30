@@ -1,4 +1,4 @@
-package com.example.minihub;
+package com.example.minihub.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +11,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.example.minihub.R;
 import com.jaeger.library.StatusBarUtil;
 
 import java.security.Key;
@@ -47,7 +49,9 @@ public class WebActivity extends AppCompatActivity {
         String title = intent.getStringExtra("title");
         mToolbar.setTitle(title);
         webView.loadUrl(link);
+        webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient(){
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
