@@ -7,26 +7,32 @@
  ## 首页
 <div align=center>
   <img width="300" height="500" src="https://raw.github.com/BigImpostor/WanAndroid/master/images/device-2018-08-30-225114.png"/>
+  </div>
 
 ## 文章导航
  <div align=center>
     <img width="300" height="500" src="https://raw.github.com/BigImpostor/WanAndroid/master/images/device-2018-08-30-225201.png"/>
+  </div>
  
  ## 项目
 <div align=center>
   <img width="300" height="500" src="https://raw.github.com/BigImpostor/WanAndroid/master/images/device-2018-08-30-225227.png"/>
+  </div>
 
  ## 个人页
 <div align=center>
   <img width="300" height="500" src="https://raw.github.com/BigImpostor/WanAndroid/master/images/device-2018-08-30-225214.png"/>
+  </div>
   
  ## 搜索
 <div align=center>
   <img width="300" height="500" src="https://raw.github.com/BigImpostor/WanAndroid/master/images/device-2018-08-30-225330.png"/>
+ </div>
   
   ## 我的收藏
 <div align=center>
   <img width="300" height="500" src="https://raw.github.com/BigImpostor/WanAndroid/master/images/device-2018-08-30-225525.png"/>
+  </div>
 
 
 
